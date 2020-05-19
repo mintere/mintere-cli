@@ -7,7 +7,9 @@
     "rootDir": "src",
     "strict": true,
     "target": "es2017",
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "allowJs": true,
+    "checkJs": false
   },
   "include": [
     "src/**/*"
