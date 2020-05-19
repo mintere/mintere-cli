@@ -3,7 +3,7 @@ import { Command, flags } from "@oclif/command";
 import Koa from "koa";
 import * as fs from "fs";
 import { promisify } from "util";
-import { join, sep } from "path";
+import { join, sep, resolve } from "path";
 
 import { compileHandlebars } from "@mintere/sites/dist/precompiler";
 
@@ -32,18 +32,30 @@ interface MockFileData {
 export default class Local extends Command {
   static description = "Preview a site locally";
 
-  static examples = [
-    `$ mintere sites:local
-🚀 Sites Server listening on http://0.0.0.0:4200
-`,
-  ];
+  static examples = [`$ mintere sites:local`];
 
   static flags = {
     help: flags.help({ char: "h" }),
+    mocksDir: flags.string({
+      char: "m",
+      description: "relative path to mocks directory",
+      default: "./mocks",
+      parse: (input) => resolve(input),
+    }),
   };
 
-  async loadMockData(uid: string): Promise<MockFileData> {
-    let path = join(process.cwd(), "mocks", uid.replace("/", sep));
+  static args = [
+    {
+      name: "dir",
+      required: false,
+      description: "relative path to theme directory",
+      parse: (input: string) => resolve(input),
+      default: "./theme",
+    },
+  ];
+
+  async loadMockData(mocksDir: string, uid: string): Promise<MockFileData> {
+    let path = join(mocksDir, uid.replace("/", sep));
 
     if ((await stat(path)).isDirectory()) {
       path += "/index.json";
@@ -61,23 +73,21 @@ export default class Local extends Command {
     templates: PartialsMap;
   } = { blocks: {}, partials: {}, templates: {} };
 
-  async compileTemplate(path: string): Promise<void> {
-    const partialNamePattern = /(partials|templates|blocks)\/(.+)\.(?:hbs|handlebars)$/i;
-    const match = path.match(partialNamePattern);
+  async compileTemplate(themePath: string, absPath: string): Promise<void> {
+    const partialNamePattern = /^(partials|templates|blocks)\/(.+)\.(?:hbs|handlebars)$/i;
+    const match = themePath.match(partialNamePattern);
     if (match) {
       const groupName = match[1] as "partials" | "templates" | "blocks";
       const partialName = match[2];
 
       this.log("Compiling " + groupName + ":", partialName);
-      const { compiled } = await compileHandlebars(
-        fs.createReadStream(path)
-      );
+      const { compiled } = await compileHandlebars(fs.createReadStream(absPath));
       const template = parseCompiledTemplate(compiled);
       this.log("Compiled " + groupName + ":", partialName);
 
       this._templates[groupName][partialName] = template;
     } else {
-      this.log("Ignoring becuase not a template", path);
+      this.log("Ignoring becuase not a template", absPath);
     }
   }
 
@@ -97,18 +107,21 @@ export default class Local extends Command {
   }
 
   async run() {
-    //const {args, flags} = this.parse(Local)
+    const {
+      args: { dir },
+      flags: { mocksDir }
+    } = this.parse(Local);
 
     let templatesCompiling: Promise<void>[] = [];
 
     await new Promise((res, rej) => {
       chokidar
-        .watch(["./partials/**.hbs", "./templates/**.hbs", "./blocks/**.hbs"])
+        .watch(["./partials/**.hbs", "./templates/**.hbs", "./blocks/**.hbs"], {cwd: dir})
         .on("add", (path) =>
-          templatesCompiling.push(this.compileTemplate(path))
+          templatesCompiling.push(this.compileTemplate(path, resolve(dir, path)))
         )
         .on("change", (path) =>
-          templatesCompiling.push(this.compileTemplate(path))
+          templatesCompiling.push(this.compileTemplate(path, resolve(dir, path)))
         )
         .on("unlink", (path) => this.removeTemplate(path))
         .on("ready", () => res(Promise.all(templatesCompiling)))
@@ -123,9 +136,9 @@ export default class Local extends Command {
         ctx.body = "Not found.";
       } else if (ctx.path.startsWith("/assets/")) {
         if (ctx.path.endsWith(".css")) ctx.set("Content-Type", "text/css");
-        ctx.body = fs.createReadStream(join(process.cwd(), ctx.path));
+        ctx.body = fs.createReadStream(join(dir, ctx.path));
       } else {
-        const data = await this.loadMockData(ctx.path.slice(1));
+        const data = await this.loadMockData(mocksDir, ctx.path);
 
         const template = this._templates.templates[data.templateUid];
 
