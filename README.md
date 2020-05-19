@@ -28,28 +28,11 @@ USAGE
 <!-- usagestop -->
 # Commands
 <!-- commands -->
-* [`mintere hello [FILE]`](#mintere-hello-file)
-* [`mintere help [COMMAND]`](#mintere-help-command)
-
-## `mintere hello [FILE]`
-
-describe the command here
-
-```
-USAGE
-  $ mintere hello [FILE]
-
-OPTIONS
-  -f, --force
-  -h, --help       show CLI help
-  -n, --name=name  name to print
-
-EXAMPLE
-  $ mintere hello
-  hello world from ./src/hello.ts!
-```
-
-_See code: [src/commands/hello.ts](https://github.com/mintere/mintere-cli/blob/v0.1.0/src/commands/hello.ts)_
+- [mintere](#mintere)
+- [Usage](#usage)
+- [Commands](#commands)
+  - [`mintere help [COMMAND]`](#mintere-help-command)
+  - [`mintere sites:local`](#mintere-siteslocal)
 
 ## `mintere help [COMMAND]`
 
@@ -67,4 +50,22 @@ OPTIONS
 ```
 
 _See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v3.0.1/src/commands/help.ts)_
+
+## `mintere sites:local`
+
+Preview a site locally
+
+```
+USAGE
+  $ mintere sites:local
+
+OPTIONS
+  -h, --help  show CLI help
+
+EXAMPLE
+  $ mintere sites:local
+  🚀 Sites Server listening on http://0.0.0.0:4200
+```
+
+_See code: [src/commands/sites/local.ts](https://github.com/mintere/mintere-cli/blob/v0.1.0/src/commands/sites/local.ts)_
 <!-- commandsstop -->
