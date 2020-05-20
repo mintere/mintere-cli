@@ -136,6 +136,7 @@ export default class Local extends Command {
         ctx.body = "Not found.";
       } else if (ctx.path.startsWith("/assets/")) {
         if (ctx.path.endsWith(".css")) ctx.set("Content-Type", "text/css");
+        if (ctx.path.endsWith(".svg")) ctx.set("Content-Type", "image/svg+xml");
         ctx.body = fs.createReadStream(join(dir, ctx.path));
       } else {
         const data = await this.loadMockData(mocksDir, ctx.path);

@@ -19,7 +19,7 @@ $ npm install -g mintere
 $ mintere COMMAND
 running command...
 $ mintere (-v|--version|version)
-mintere/0.3.1 darwin-x64 node-v12.4.0
+mintere/0.3.2 darwin-x64 node-v12.4.0
 $ mintere --help [COMMAND]
 USAGE
   $ mintere COMMAND
@@ -71,7 +71,7 @@ EXAMPLE
   $ DEPLOYMENT_KEY=key mintere sites:deploy
 ```
 
-_See code: [src/commands/sites/deploy.ts](https://github.com/mintere/mintere-cli/blob/v0.3.1/src/commands/sites/deploy.ts)_
+_See code: [src/commands/sites/deploy.ts](https://github.com/mintere/mintere-cli/blob/v0.3.2/src/commands/sites/deploy.ts)_
 
 ## `mintere sites:local [DIR]`
 
@@ -92,7 +92,7 @@ EXAMPLE
   $ mintere sites:local
 ```
 
-_See code: [src/commands/sites/local.ts](https://github.com/mintere/mintere-cli/blob/v0.3.1/src/commands/sites/local.ts)_
+_See code: [src/commands/sites/local.ts](https://github.com/mintere/mintere-cli/blob/v0.3.2/src/commands/sites/local.ts)_
 
 ## `mintere sites:new`
 
@@ -109,5 +109,5 @@ EXAMPLE
   $ mintere sites:new
 ```
 
-_See code: [src/commands/sites/new.ts](https://github.com/mintere/mintere-cli/blob/v0.3.1/src/commands/sites/new.ts)_
+_See code: [src/commands/sites/new.ts](https://github.com/mintere/mintere-cli/blob/v0.3.2/src/commands/sites/new.ts)_
 <!-- commandsstop -->

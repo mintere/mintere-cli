@@ -1,6 +1,6 @@
 {
   "name": "mintere",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "author": "Mintere (mintere.com)",
   "bin": {
     "mintere": "./bin/run"
