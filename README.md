@@ -19,7 +19,7 @@ $ npm install -g mintere
 $ mintere COMMAND
 running command...
 $ mintere (-v|--version|version)
-mintere/0.2.0 darwin-x64 node-v12.4.0
+mintere/0.3.0 darwin-x64 node-v12.4.0
 $ mintere --help [COMMAND]
 USAGE
   $ mintere COMMAND
@@ -29,6 +29,7 @@ USAGE
 # Commands
 <!-- commands -->
 * [`mintere help [COMMAND]`](#mintere-help-command)
+* [`mintere sites:deploy [DIR]`](#mintere-sitesdeploy-dir)
 * [`mintere sites:local [DIR]`](#mintere-siteslocal-dir)
 * [`mintere sites:new`](#mintere-sitesnew)
 
@@ -49,6 +50,29 @@ OPTIONS
 
 _See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v3.0.1/src/commands/help.ts)_
 
+## `mintere sites:deploy [DIR]`
+
+Deploy a site to the Mintere Sites Platform
+
+```
+USAGE
+  $ mintere sites:deploy [DIR]
+
+ARGUMENTS
+  DIR  [default: ./theme] The directory of the theme to deploy
+
+OPTIONS
+  -e, --environment=environment      [default: production] the environment to deploy to
+  -h, --help                         show CLI help
+  -k, --deploymentKey=deploymentKey  (required) The key to use when deploying to the API.
+  --api=api                          [default: https://app.mintere.com] The base URL of the API to deploy to.
+
+EXAMPLE
+  $ DEPLOYMENT_KEY=key mintere sites:deploy
+```
+
+_See code: [src/commands/sites/deploy.ts](https://github.com/mintere/mintere-cli/blob/v0.3.0/src/commands/sites/deploy.ts)_
+
 ## `mintere sites:local [DIR]`
 
 Preview a site locally
@@ -68,7 +92,7 @@ EXAMPLE
   $ mintere sites:local
 ```
 
-_See code: [src/commands/sites/local.ts](https://github.com/mintere/mintere-cli/blob/v0.2.0/src/commands/sites/local.ts)_
+_See code: [src/commands/sites/local.ts](https://github.com/mintere/mintere-cli/blob/v0.3.0/src/commands/sites/local.ts)_
 
 ## `mintere sites:new`
 
@@ -85,5 +109,5 @@ EXAMPLE
   $ mintere sites:new
 ```
 
-_See code: [src/commands/sites/new.ts](https://github.com/mintere/mintere-cli/blob/v0.2.0/src/commands/sites/new.ts)_
+_See code: [src/commands/sites/new.ts](https://github.com/mintere/mintere-cli/blob/v0.3.0/src/commands/sites/new.ts)_
 <!-- commandsstop -->
