@@ -3,18 +3,7 @@ import * as fs from "fs";
 import { resolve, join } from "path";
 import * as tarFs from "tar-fs";
 
-import deploy from "../../sites/deploy"
-
-interface MockFileData {
-  templateUid: string;
-  renderData: {
-    title: string;
-    uid: string;
-    metaDescription: string;
-    settings: any;
-    blocks: any;
-  };
-}
+import deploy from "../../sites/deploy";
 
 export default class Deploy extends Command {
   static description = "Deploy a site to the Mintere Sites Platform";
