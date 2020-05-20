@@ -74,7 +74,7 @@ export default class Local extends Command {
   } = { blocks: {}, partials: {}, templates: {} };
 
   async compileTemplate(themePath: string, absPath: string): Promise<void> {
-    const partialNamePattern = /^(partials|templates|blocks)\/(.+)\.(?:hbs|handlebars)$/i;
+    const partialNamePattern = /^(partials|templates|blocks)[\/\\](.+)\.(?:hbs|handlebars)$/i;
     const match = themePath.match(partialNamePattern);
     if (match) {
       const groupName = match[1] as "partials" | "templates" | "blocks";
